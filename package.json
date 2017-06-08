@@ -1,0 +1,23 @@
+{
+  "name": "simplewebsite_nodejs",
+  "version": "1.0.0",
+  "description": "this is a simple webiste using nodejs, express and mongodb but the front-end is ugly.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0Steve0/SimpleWebsite_Nodejs.git"
+  },
+  "author": "Steve Shao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0Steve0/SimpleWebsite_Nodejs/issues"
+  },
+  "homepage": "https://github.com/0Steve0/SimpleWebsite_Nodejs#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
