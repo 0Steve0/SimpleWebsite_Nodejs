@@ -30,6 +30,10 @@ app.get('/', function (req, res, next) {
  res.sendFile( path + 'index.html');
 });
 
+app.get('/register', function (req, res, next) {
+ res.sendFile( path + 'register.html');
+});
+
 app.listen(port, function() {
  console.log('Server running at port ' + port);
 });
