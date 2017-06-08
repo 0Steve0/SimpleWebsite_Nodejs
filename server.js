@@ -1,7 +1,7 @@
 
 var express = require('express');
 var mongoose = require('mongoose');
-var User = require(__dirname+'/models/users.js');
+var User = require('/models/users.js');
 var bodyParser = require('body-parser');
 var app = express();
 var port = 8888;
