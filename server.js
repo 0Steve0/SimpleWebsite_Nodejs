@@ -7,6 +7,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt-nodejs');
 var User = require('./models/users.js');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 /*Database connection - MongoDB*/
 //Created from the command earlier. Ensure this is done on the first_db instance
@@ -25,6 +27,7 @@ mongoose.connect(url, function(err) {
         console.log('connection successful');
     }
 });
+
 /*
  * set routerss and static files
  */
@@ -36,14 +39,71 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/public', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res, next) {
- res.sendFile( path + 'index.html');
+ res.sendFile( path + 'loginin.html');
 });
 
 app.get('/register', function (req, res, next) {
  res.sendFile( path + 'register.html');
+});
+
+app.get('/home', loggedIn, function (req, res, next) {
+    res.sendFile( path + 'home.html');
+});
+
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+app.post('/login', passport.authenticate('local'),
+    function(req, res) {
+        res.redirect('/home');
+});
+
+app.get('/logout', function (req, res, next) {
+    req.logout();
+    res.redirect('/');
+});
+/**********
+The login logic where it passes here if it reaches passport.authenticate
+**********/
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        User.findOne({ username: username }, function (err, user) {
+            if(user !== null) {
+                var isPasswordCorrect = bcrypt.compareSync(password, user.password);
+                if(isPasswordCorrect) {
+                    console.log("Username and password correct!");
+                    return done(null, user);
+                } else {
+                    console.log("Password incorrect!");
+                    return done(null, false);
+                }
+           } else {
+               console.log("Username does not exist!");
+               return done(null, false);
+           }
+       });
+    }
+));
+/**********
+Serialize and Deserialize here for passport.authenticate
+**********/
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+     done('wrong', user);
 });
 
 app.post('/register', function (req, res, next) {
