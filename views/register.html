@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>SimpleWebsite_Nodejs</title>
+    <title>My first NodeJS Website</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="/public/alert.js"></script>
     </head>
     <body>
         <p>Registration page</p>
 
-        <form action="/register" method="post">
-            <p>Username <input type="text" name="username" /></p>
-            <p>Password <input type="password" name="password" /></p>
-            <input type="submit" value="Register"/>
+        <form>
+            <p>Username <input type="text" class="username" /></p>
+            <p>Password <input type="password" class="password" /></p>
+            <input type="button" onclick="registerUser()" value="Register"/>
         </form>
 
         <p><a href="/">Click here to go back.</a> </p>
